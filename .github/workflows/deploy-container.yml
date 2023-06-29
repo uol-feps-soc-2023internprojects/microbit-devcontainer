@@ -26,7 +26,7 @@ jobs:
       - name: Build image and deploy
         run: |
           npm install -g @devcontainers/cli
-          build . --tag ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer:${{ steps.get_tag_name.outputs.tag }}
+          devcontainer build . --tag ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer:${{ steps.get_tag_name.outputs.tag }}
 
 
           
