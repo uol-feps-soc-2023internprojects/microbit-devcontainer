@@ -23,18 +23,10 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
       
-      - name: Build and run Dev Container task
-        uses: devcontainers/ci@v0.3
-        with:
-          # Change this to point to your image name
-          imageName: ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer
-          push: always
-          # Change this to be your CI task/script
-          runCmd: |
-            # Add multiple commands to run if needed
-            make install-packages
-            make ci-build
-
+      - name: Build image and deploy
+        run: |
+          npm install -g @devcontainers/cli
+          build . --tag ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer:${{ steps.get_tag_name.outputs.tag }}
 
 
           
