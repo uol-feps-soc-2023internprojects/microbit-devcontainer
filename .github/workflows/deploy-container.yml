@@ -1,0 +1,33 @@
+name: Deploy container to ghcr
+
+on: 
+  push:
+    tags:
+    - 'v*'
+    
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout github actions
+        uses: actions/checkout@main
+      
+      - name: Get tag name
+        id: get_tag_name  
+        run: echo "::set-output name=tag::$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      
+      - name: Build image and deploy
+        run: |
+          npm install -g @devcontainers/cli
+          devcontainers build . --tag ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer:${{ steps.get_tag_name.outputs.tag }}
+
+
+          
+  
