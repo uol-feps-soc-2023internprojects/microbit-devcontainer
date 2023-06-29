@@ -27,6 +27,7 @@ jobs:
         run: |
           npm install -g @devcontainers/cli
           devcontainer build --workspace-folder . --image-name ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer:${{ steps.get_tag_name.outputs.tag }}
+          docker push ghcr.io/uol-feps-soc-2023internprojects/microbit-devcontainer:${{ steps.get_tag_name.outputs.tag }}
 
 
           
